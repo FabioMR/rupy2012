@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914191449) do
+ActiveRecord::Schema.define(:version => 20120920182035) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -98,6 +98,19 @@ ActiveRecord::Schema.define(:version => 20120914191449) do
     t.float    "inscription_value"
     t.integer  "inscription_amount"
   end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "event_id"
+    t.datetime "occur_at"
+    t.integer  "speaker_id"
+    t.string   "talk"
+    t.text     "talk_description"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "schedules", ["event_id"], :name => "index_schedules_on_event_id"
+  add_index "schedules", ["speaker_id"], :name => "index_schedules_on_speaker_id"
 
   create_table "speakers", :force => true do |t|
     t.integer  "sequence"

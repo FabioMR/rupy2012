@@ -25,7 +25,7 @@ class Admin::SpeakersController < Admin::AdminController
   def update
     @speaker = Speaker.find(params[:id])
 
-    flash[:success] = "speaker was successfully updated." if @speaker.update_attributes(params[:speaker])
+    flash[:success] = "Speaker was successfully updated." if @speaker.update_attributes(params[:speaker])
     respond_with @speaker, :location => admin_speakers_path
   end
 
@@ -33,7 +33,7 @@ class Admin::SpeakersController < Admin::AdminController
     @speaker = Speaker.find(params[:id])
     @speaker.destroy
 
-    flash[:success] = "speaker was successfully destroyed."
+    flash[:success] = "Speaker was successfully destroyed."
     respond_with @speaker, :location => admin_speakers_path
   end
 
