@@ -2,6 +2,12 @@
   <h2>Listing inscriptions</h2>
 </div>
 
+<div id="statistics">
+  <% @inscriptions_values.each do |item| %>
+    <%= content_tag :p, "#{item.payment_status.blank? ? 'unlabeled' : item.payment_status}: #{item.count} inscriptions (R$ #{item.value})" %>
+  <% end %>
+</div>
+
 <table class="table table-striped table-hover table-bordered">
   <thead>
     <tr>
@@ -11,6 +17,7 @@
       <th>Name</th>
       <th>E-mail</th>
       <th>Status</th>
+      <th>Value</th>
       <th></th>
     </tr>
   </thead>
@@ -24,6 +31,7 @@
         <td><%= inscription.name %></td>
         <td><%= inscription.email %></td>
         <td class="nowrap"><%= inscription.payment_status %></td>
+        <td class="nowrap"><%= inscription.payment_value %></td>
         <td class="nowrap">
           <div>
             <%= link_to 'Edit', [:edit, inscription], :class => 'btn btn-small' %>

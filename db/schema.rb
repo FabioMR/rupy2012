@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920182035) do
+ActiveRecord::Schema.define(:version => 20121008121434) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120920182035) do
     t.integer  "event_id"
     t.integer  "training_id"
     t.string   "payment_transaction"
+    t.float    "payment_value"
   end
 
   add_index "br_inscriptions", ["city_id"], :name => "index_br_inscriptions_on_city_id"

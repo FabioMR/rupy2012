@@ -55,4 +55,12 @@ class Br::Inscription < ActiveRecord::Base
     self.payment_processed_at.nil? ? "" : I18n.l(self.payment_processed_at, :format => :short)
   end
 
+  def calculate_payment_value
+    if self.payment_status.blank?
+      self.payment_value = self.student? ? self.event.inscription_value / 2 : self.event.inscription_value
+      self.save
+    end
+    self.payment_value
+  end
+
 end

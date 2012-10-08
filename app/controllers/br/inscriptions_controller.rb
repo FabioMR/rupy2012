@@ -10,8 +10,10 @@ class Br::InscriptionsController < Br::BrController
   def index
     if params[:training_id].present?
       @inscriptions = Br::Inscription.find_all_by_training_id(params[:training_id])
+      @inscriptions_values = Br::Inscription.where("training_id = ?", params[:training_id]).group(:payment_status).select("payment_status, COUNT(1) AS count, SUM(payment_value) AS value")
     else
       @inscriptions = Br::Inscription.find_all_by_event_id(@event.id)
+      @inscriptions_values = Br::Inscription.where("event_id = ?", @event.id).group(:payment_status).select("payment_status, COUNT(1) AS count, SUM(payment_value) AS value")
     end
   end
 
@@ -54,7 +56,7 @@ class Br::InscriptionsController < Br::BrController
 
     @order = PagSeguro::Order.new(@inscription.payment_token)
     @order.billing = { :name => @inscription.name, :email => @inscription.email }
-    @order.add :id => @inscription.id, :price => (@inscription.student? ? @event.inscription_value / 2 : @event.inscription_value), :description => "Inscrição no evento RUPY 2012 (São José dos Campos/SP Edition) para os dias 08/12 e 09/12"
+    @order.add :id => @inscription.id, :price => @inscription.calculate_payment_value, :description => "Inscrição no evento RUPY 2012 (São José dos Campos/SP Edition) para os dias 08/12 e 09/12"
   end
 
   def pagseguro_update
